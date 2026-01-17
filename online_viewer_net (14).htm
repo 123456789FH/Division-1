@@ -1,0 +1,1501 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>تطبيق القسمة (١) | رياضيات ثالث ابتدائي</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#f6f7fb;
+      --card:#ffffff;
+      --text:#121826;
+      --muted:#556070;
+      --accent:#1f9d7a;
+      --accent2:#0f6c54;
+      --danger:#c2410c;
+      --good:#0f9d58;
+      --border:rgba(0,0,0,.08);
+      --shadow: 0 10px 30px rgba(16,24,40,.10);
+      --radius:18px;
+
+      /* أسلوب كتاب */
+      --ink:#111827;
+      --inkSoft:rgba(17,24,39,.20);
+      --paper:#ffffff;
+      --paper2:#fbfbfd;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:"Tajawal", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(1200px 600px at 80% -10%, rgba(31,157,122,.10), transparent 60%),
+                  radial-gradient(900px 500px at 10% 0%, rgba(15,108,84,.08), transparent 55%),
+                  var(--bg);
+      color:var(--text);
+    }
+    .container{max-width:1100px;margin:0 auto;padding:18px}
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:16px;
+      margin:14px 0;
+    }
+
+    header.card{padding:14px 16px}
+    .brand{display:flex;align-items:center;gap:14px;justify-content:space-between;flex-wrap:wrap;}
+    .brand .title{display:flex;flex-direction:column;gap:4px;min-width:260px;flex:1;}
+    h1{margin:0;font-size:22px}
+    .subtitle{margin:0;color:var(--muted);font-size:14px}
+
+    .logos{display:flex;align-items:center;gap:10px}
+    .logo{
+      width:46px;height:46px;border-radius:14px;object-fit:cover;
+      border:1px solid var(--border);background:#fff;
+    }
+    .logoPh{
+      width:46px;height:46px;border-radius:14px;
+      border:1px dashed rgba(0,0,0,.20);
+      background:#fff;
+      display:flex;align-items:center;justify-content:center;
+      font-weight:900;color:var(--muted);font-size:12px;
+    }
+
+    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    select, input{
+      font-family:inherit;
+      padding:10px 12px;
+      border:1px solid var(--border);
+      border-radius:14px;
+      font-size:15px;
+      outline:none;
+      background:#fff;
+      min-width:240px;
+    }
+    input{min-width:180px}
+
+    .btn{
+      border:none;
+      background:var(--text);
+      color:#fff;
+      padding:10px 14px;
+      border-radius:14px;
+      cursor:pointer;
+      font-weight:900;
+      transition:.15s transform ease, .15s opacity ease;
+      font-family:inherit;
+    }
+    .btn:active{transform:scale(.98)}
+    .btn.secondary{
+      background:#eef2f7;
+      color:var(--text);
+      border:1px solid var(--border);
+    }
+    .btn.accent{background:linear-gradient(135deg, var(--accent), var(--accent2))}
+    .btn:disabled{opacity:.55;cursor:not-allowed}
+
+    .hint{color:var(--muted);margin:8px 0 0;font-size:14px}
+    .hidden{display:none !important;}
+
+    .badge{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 10px;border-radius:999px;
+      background:rgba(31,157,122,.10);
+      border:1px solid rgba(31,157,122,.28);
+      color:var(--accent2);
+      font-weight:900;
+      font-size:13px;
+      white-space:nowrap;
+    }
+
+    h2{margin:0 0 10px;font-size:18px}
+    h3{margin:0 0 10px;font-size:17px}
+    .sectionTitle{
+      display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
+      margin-bottom:10px
+    }
+
+    .stepbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    .stepbtn{
+      padding:10px 12px;border-radius:999px;border:1px solid var(--border);
+      background:#fff;cursor:pointer;font-weight:900;color:var(--muted);font-family:inherit;
+    }
+    .stepbtn.active{
+      background:rgba(31,157,122,.12);
+      color:var(--accent2);
+      border-color:rgba(31,157,122,.35);
+    }
+
+    .pill{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 10px;border-radius:999px;border:1px solid var(--border);
+      background:#fff;color:var(--text);font-weight:900;font-size:13px;
+      white-space:nowrap;
+    }
+
+    .box{
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:12px;
+      background:#fff;
+    }
+
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media (max-width:900px){ .grid2{grid-template-columns:1fr} }
+
+    .terms{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;}
+    @media (max-width:700px){ .terms{grid-template-columns:1fr} }
+    .termCard{
+      border:1px solid var(--border);border-radius:16px;padding:12px;
+      background:linear-gradient(180deg, rgba(31,157,122,.06), transparent 45%);
+    }
+    .termCard b{font-size:15px}
+    .termDef{color:var(--muted);margin-top:6px;font-size:14px;line-height:1.6}
+
+    .qa{display:grid;grid-template-columns:1fr;gap:10px;}
+    .qrow{
+      display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;
+      border:1px solid var(--border);border-radius:16px;padding:12px;background:#fff;
+    }
+    .qtext{font-weight:900}
+    .feedback{font-weight:900}
+    .ok{color:var(--good)}
+    .bad{color:var(--danger)}
+    .muted{color:var(--muted)}
+
+    details{
+      border:1px solid var(--border);
+      border-radius:16px;
+      background:#fff;
+      overflow:hidden;
+    }
+    summary{
+      padding:12px;cursor:pointer;font-weight:900;list-style:none;
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      background:linear-gradient(180deg, rgba(15,108,84,.06), transparent 55%);
+    }
+    summary::-webkit-details-marker{display:none}
+    .detailsBody{padding:12px}
+
+    /* ===== الشرح/الرسم (أسلوب كتاب) ===== */
+    .explainBox{
+      margin-top:10px;
+      padding:12px;
+      border:2px solid var(--inkSoft);
+      background:var(--paper2);
+      border-radius:14px;
+      color:var(--ink);
+    }
+    .explainBox.bad{
+      border-color:rgba(194,65,12,.25);
+      background:rgba(194,65,12,.05);
+      color:#5a1b06;
+    }
+    .exTitle{font-weight:900;margin-bottom:6px}
+    .eqLine{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:6px 0 0;font-weight:900;}
+    .eqLabel{color:var(--muted)}
+    .eqExpr{font-weight:900}
+
+    /* مجموعات متساوية: إطارات + دوائر */
+    .vizGrid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+      gap:10px;margin-top:10px;
+    }
+    .vizGroup{
+      border:2px solid var(--ink);
+      border-radius:14px;
+      padding:10px;background:var(--paper);
+    }
+    .vizLabel{font-weight:900;color:var(--ink);font-size:13px;margin-bottom:6px}
+    .tokens{display:flex;flex-wrap:wrap;gap:6px}
+    .token{
+      width:14px;height:14px;border-radius:50%;
+      border:2px solid var(--ink);
+      background:rgba(17,24,39,.06);
+      display:inline-block;
+    }
+
+    /* خط أعداد للطرح المتكرر */
+    .numline{
+      margin-top:10px;
+      border:2px solid var(--inkSoft);
+      border-radius:14px;
+      background:#fff;
+      padding:10px;
+    }
+    .numline svg{width:100%;height:auto;display:block}
+
+    /* مثلث عائلة الحقائق */
+    .factTri{
+      margin-top:10px;
+      display:grid;
+      grid-template-rows:auto auto;
+      gap:10px;
+      justify-items:center;
+    }
+    .triNode{
+      width:56px;height:56px;border-radius:14px;
+      border:2px solid var(--ink);
+      background:#fff;
+      display:flex;align-items:center;justify-content:center;
+      font-weight:900;color:var(--ink);
+    }
+    .triTop{width:64px;height:64px;border-radius:16px}
+    .triBottom{display:flex;gap:18px}
+
+    /* اختيار من متعدد */
+    .mcq{border:1px solid var(--border);border-radius:16px;padding:12px;background:#fff;}
+    .opts{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    .optBtn{
+      border:2px solid var(--inkSoft);
+      background:#fff;
+      border-radius:999px;
+      padding:8px 12px;
+      cursor:pointer;
+      font-weight:900;
+      font-family:inherit;
+      color:var(--ink);
+    }
+    .optBtn.correct{border-color:rgba(15,157,88,.45);background:rgba(15,157,88,.10)}
+    .optBtn.wrong{border-color:rgba(194,65,12,.45);background:rgba(194,65,12,.10)}
+    .scoreLine{margin-top:10px;font-weight:900}
+
+    /* لعبة التوزيع: دوائر */
+    .groupsWrap{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;}
+    @media (max-width:1100px){ .groupsWrap{grid-template-columns:repeat(3,minmax(0,1fr));} }
+    @media (max-width:650px){ .groupsWrap{grid-template-columns:repeat(2,minmax(0,1fr));} }
+    .groupBox{
+      border:2px solid var(--ink);
+      border-radius:14px;
+      padding:10px;
+      min-height:88px;
+      background:#fff;
+    }
+    .groupTitle{font-weight:900;color:var(--ink);font-size:13px;margin-bottom:8px}
+    .pieces{display:flex;flex-wrap:wrap;gap:6px}
+    .piece{
+      width:14px;height:14px;border-radius:50%;
+      border:2px solid var(--ink);
+      background:rgba(17,24,39,.06)
+    }
+
+    footer{
+      padding:18px 0 30px;text-align:center;color:var(--muted);
+      font-weight:700;font-size:14px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <header class="card">
+      <div class="brand">
+        <div class="logos" id="logoWrap">
+          <img class="logo" id="logoMain" src="assets/logo.png" alt="شعار">
+        </div>
+
+        <div class="title">
+          <h1>تطبيق القسمة (١) | رياضيات ثالث ابتدائي</h1>
+          <p class="subtitle">اختر/اختاري الدرس أولًا ✅ ثم ستظهر الأنشطة بالترتيب.</p>
+        </div>
+
+        <div class="logos">
+          <img class="logo" id="logoAlt" src="assets/logo2.png" alt="شعار" style="display:none">
+        </div>
+      </div>
+    </header>
+
+    <!-- اختيار الدرس -->
+    <section class="card" id="picker">
+      <div class="sectionTitle">
+        <h2>اختيار الدرس</h2>
+        <span class="badge">ابدأ بالدرس ثم انتقل للأنشطة</span>
+      </div>
+
+      <div class="row">
+        <select id="lessonSelect" aria-label="اختيار الدرس">
+          <option value="" selected disabled>اختر/اختاري الدرس من هنا…</option>
+        </select>
+        <button class="btn accent" id="startBtn">ابدأ</button>
+        <button class="btn secondary" id="resetBtn" title="عودة للبداية">إعادة ضبط</button>
+      </div>
+
+      <p class="hint">ملاحظة للمتعلم: اتبع الترتيب (١ → ٥) خطوة بخطوة.</p>
+    </section>
+
+    <!-- شريط الخطوات -->
+    <section class="card hidden" id="lessonHeaderCard">
+      <div class="sectionTitle">
+        <div>
+          <h2 id="lessonTitle">—</h2>
+          <p class="hint" id="lessonDesc">—</p>
+        </div>
+        <span class="badge" id="lessonTag">جاهز</span>
+      </div>
+
+      <div class="stepbar" id="stepbar">
+        <button class="stepbtn active" data-step="0">١) المفاهيم</button>
+        <button class="stepbtn" data-step="1">٢) مثال</button>
+        <button class="stepbtn" data-step="2">٣) تدريب</button>
+        <button class="stepbtn" data-step="3">٤) نشاط</button>
+        <button class="stepbtn" data-step="4">٥) تقويم</button>
+      </div>
+    </section>
+
+    <!-- 1) المفاهيم -->
+    <section class="card hidden panel" id="panel0">
+      <div class="sectionTitle">
+        <h3>١) المفاهيم والمفردات</h3>
+        <span class="pill">هدف: فهم المعنى</span>
+      </div>
+      <div id="conceptTerms" class="terms"></div>
+
+      <div class="box" style="margin-top:12px">
+        <b>تطبيق سريع:</b>
+        <div class="hint" style="margin-top:6px">اختر/اختاري الإجابة.</div>
+        <div id="conceptMiniQuiz" class="qa" style="margin-top:10px"></div>
+      </div>
+
+      <div class="row" style="justify-content:space-between;margin-top:12px">
+        <button class="btn secondary" data-goto="1">التالي ⟵</button>
+      </div>
+    </section>
+
+    <!-- 2) مثال -->
+    <section class="card hidden panel" id="panel1">
+      <div class="sectionTitle">
+        <h3>٢) مثال</h3>
+        <span class="pill">اختر/اختاري الإجابة</span>
+      </div>
+      <div id="exampleBox" class="grid2"></div>
+
+      <div class="row" style="justify-content:space-between;margin-top:12px">
+        <button class="btn secondary" data-goto="0">⟶ السابق</button>
+        <button class="btn secondary" data-goto="2">التالي ⟵</button>
+      </div>
+    </section>
+
+    <!-- 3) تدريب -->
+    <section class="card hidden panel" id="panel2">
+      <div class="sectionTitle">
+        <h3>٣) تدريب موجه</h3>
+        <span class="pill">اكتب/اكتبي ثم تحقق</span>
+      </div>
+
+      <div class="row" style="margin-bottom:10px">
+        <button class="btn accent" id="practiceNewBtn">تمارين جديدة</button>
+        <span class="hint">اكتب/اكتبي الناتج ثم اضغط/اضغطي "تحقق".</span>
+      </div>
+      <div id="practiceList" class="qa"></div>
+
+      <div class="row" style="justify-content:space-between;margin-top:12px">
+        <button class="btn secondary" data-goto="1">⟶ السابق</button>
+        <button class="btn secondary" data-goto="3">التالي ⟵</button>
+      </div>
+    </section>
+
+    <!-- 4) نشاط -->
+    <section class="card hidden panel" id="panel3">
+      <div class="sectionTitle">
+        <h3>٤) نشاط تفاعلي</h3>
+        <span class="pill">طبّق/طبّقي</span>
+      </div>
+
+      <details id="actDist">
+        <summary>لعبة التوزيع</summary>
+        <div class="detailsBody">
+          <div class="box">
+            <div id="distPrompt" class="qtext">—</div>
+            <div class="row" style="margin-top:10px;justify-content:space-between">
+              <div class="row">
+                <button class="btn accent" id="distNewBtn">سؤال جديد</button>
+                <button class="btn secondary" id="distOneBtn">وزّع/وزّعي قطعة</button>
+                <button class="btn secondary" id="distAutoBtn">توزيع تلقائي</button>
+                <button class="btn secondary" id="distResetBtn">إعادة</button>
+              </div>
+              <div class="pill" id="distRemaining">المتبقي: —</div>
+            </div>
+            <div class="hint" id="distHint" style="margin-top:8px">وزّع/وزّعي ثم أدخل/أدخلي عدد المجموعات واضغط/اضغطي "تحقق".</div>
+          </div>
+
+          <div class="box" style="margin-top:12px">
+            <b>المجموعات:</b>
+            <div id="distGroups" class="groupsWrap" style="margin-top:10px"></div>
+          </div>
+
+          <div class="box" style="margin-top:12px">
+            <div class="row" style="justify-content:space-between;gap:10px">
+              <div class="row">
+                <label class="pill" for="distAnswer">عدد المجموعات:</label>
+                <input id="distAnswer" inputmode="numeric" placeholder="مثال: ٦">
+                <button class="btn accent" id="distCheckBtn">تحقق</button>
+              </div>
+              <div class="feedback hidden" id="distFeedback"></div>
+            </div>
+            <div id="distExplain" class="explainBox hidden"></div>
+          </div>
+        </div>
+      </details>
+
+      <details id="actFacts" class="hidden" style="margin-top:12px">
+        <summary>عائلة الحقائق</summary>
+        <div class="detailsBody">
+          <div class="box">
+            <div class="row" style="justify-content:space-between;gap:12px">
+              <div>
+                <div class="qtext" id="factsPrompt">—</div>
+                <div class="hint">اختر/اختاري الإجابة.</div>
+              </div>
+              <button class="btn accent" id="factsNewBtn">سؤال جديد</button>
+            </div>
+          </div>
+          <div class="box" style="margin-top:12px">
+            <div class="mcq" id="factsMCQ"></div>
+          </div>
+        </div>
+      </details>
+
+      <details id="actSkill" style="margin-top:12px">
+        <summary>مهارة: معنى المقسوم عليه</summary>
+        <div class="detailsBody">
+          <div class="row" style="margin-top:6px">
+            <button class="btn accent" id="skillNewBtn">سؤال جديد</button>
+          </div>
+          <div class="box" style="margin-top:12px">
+            <div class="qtext" id="skillPrompt">—</div>
+            <div class="row" style="margin-top:10px">
+              <button class="btn secondary" id="skillA">عدد الأشخاص/المجموعات</button>
+              <button class="btn secondary" id="skillB">عدد العناصر في كل مجموعة</button>
+            </div>
+            <div class="feedback hidden" id="skillFeedback" style="margin-top:10px"></div>
+            <div id="skillExplain" class="explainBox hidden"></div>
+          </div>
+        </div>
+      </details>
+
+      <details id="actMC" style="margin-top:12px">
+        <summary>اختيار من متعدد</summary>
+        <div class="detailsBody">
+          <div class="row" style="justify-content:space-between">
+            <button class="btn accent" id="mcNewBtn">أسئلة جديدة</button>
+            <span class="hint">اختر/اختاري الإجابة.</span>
+          </div>
+          <div id="mcList" style="margin-top:12px;display:grid;gap:10px"></div>
+          <div class="scoreLine" id="mcScoreLine"></div>
+        </div>
+      </details>
+
+      <div class="row" style="justify-content:space-between;margin-top:12px">
+        <button class="btn secondary" data-goto="2">⟶ السابق</button>
+        <button class="btn secondary" data-goto="4">التالي ⟵</button>
+      </div>
+    </section>
+
+    <!-- 5) تقويم -->
+    <section class="card hidden panel" id="panel4">
+      <div class="sectionTitle">
+        <h3>٥) تقويم</h3>
+        <span class="pill">اكتب/اكتبي ثم تحقق</span>
+      </div>
+
+      <div class="row" style="justify-content:space-between">
+        <button class="btn accent" id="evalStartBtn">ابدأ التقويم</button>
+        <span class="badge" id="evalBadge">جاهز</span>
+      </div>
+
+      <div id="evalBox" style="margin-top:12px"></div>
+
+      <div class="row" style="justify-content:space-between;margin-top:12px">
+        <button class="btn secondary" data-goto="3">⟶ السابق</button>
+        <button class="btn secondary" data-goto="0">العودة للبداية ⟵</button>
+      </div>
+    </section>
+
+    <footer>
+      أ/ فاطمة هزازي ، ملتقى معلمي ومعلمات الرياضيات ، ملتقى التعليم التفاعلي
+    </footer>
+  </div>
+
+  <script>
+    /* ===== أرقام عربية ===== */
+    const arDigits = "٠١٢٣٤٥٦٧٨٩";
+    const arToEn = {'٠':'0','١':'1','٢':'2','٣':'3','٤':'4','٥':'5','٦':'6','٧':'7','٨':'8','٩':'9'};
+    const toAr = (n) => String(n).replace(/\d/g, d => arDigits[d]);
+    const parseNum = (v) => {
+      if (v == null) return NaN;
+      let s = String(v).trim().replace(/[٠-٩]/g, ch => arToEn[ch]);
+      s = s.replace(/[^\d.-]/g,'');
+      return Number(s);
+    };
+    const randInt = (min,max)=>Math.floor(Math.random()*(max-min+1))+min;
+    const shuffle = (arr)=>arr.map(x=>[Math.random(),x]).sort((a,b)=>a[0]-b[0]).map(p=>p[1]);
+
+    function forceArabicDigits(input){
+      if(!input) return;
+      input.addEventListener("input", ()=>{
+        input.value = String(input.value).replace(/\d/g, d => arDigits[d]);
+      });
+    }
+
+    /* ===== رسومات كتاب ===== */
+    function eqLine(label, expr){
+      return `<div class="eqLine"><span class="eqLabel">${label}</span><span class="eqExpr">${expr}</span></div>`;
+    }
+    function renderEqualGroups(total, perGroup){
+      const groups = total / perGroup; // نفترض بدون باقٍ
+      let html = `<div class="vizGrid">`;
+      for(let g=0; g<groups; g++){
+        html += `<div class="vizGroup">
+          <div class="vizLabel">مجموعة ${toAr(g+1)}</div>
+          <div class="tokens">${`<span class="token"></span>`.repeat(perGroup)}</div>
+        </div>`;
+      }
+      html += `</div>`;
+      return html;
+    }
+    function renderFactTriangle(a,b){
+      const c=a*b;
+      return `
+        <div class="factTri">
+          <div class="triNode triTop">${toAr(c)}</div>
+          <div class="triBottom">
+            <div class="triNode">${toAr(a)}</div>
+            <div class="triNode">${toAr(b)}</div>
+          </div>
+        </div>
+      `;
+    }
+    function renderNumberLine(total, step){
+      const ticks = total/step;
+      const W=900, H=170, margin=60, y=95, span=W-2*margin;
+      const x = (i)=> margin + (span*(i/ticks));
+      const label = (i)=> toAr(i*step);
+
+      let ticksSvg = "";
+      for(let i=0;i<=ticks;i++){
+        const xi=x(i);
+        ticksSvg += `
+          <line x1="${xi}" y1="${y-8}" x2="${xi}" y2="${y+8}" stroke="#111827" stroke-width="2"/>
+          <text x="${xi}" y="${y+34}" text-anchor="middle" font-size="16" font-family="Tajawal" fill="#111827">${label(i)}</text>
+        `;
+      }
+      let hopsSvg = "";
+      for(let i=ticks; i>=1; i--){
+        const xs=x(i), xe=x(i-1), mx=(xs+xe)/2, h=40;
+        hopsSvg += `
+          <path d="M ${xs} ${y} Q ${mx} ${y-h} ${xe} ${y}" fill="none" stroke="#111827" stroke-width="2"/>
+          <polygon points="${xe},${y} ${xe+10},${y-5} ${xe+10},${y+5}" fill="#111827"/>
+          <text x="${mx}" y="${y-h-8}" text-anchor="middle" font-size="14" font-family="Tajawal" fill="#111827">-${toAr(step)}</text>
+        `;
+      }
+      return `
+        <div class="numline">
+          <svg viewBox="0 0 ${W} ${H}" aria-label="خط أعداد">
+            <line x1="${margin}" y1="${y}" x2="${W-margin}" y2="${y}" stroke="#111827" stroke-width="2"/>
+            ${ticksSvg}
+            ${hopsSvg}
+          </svg>
+        </div>
+      `;
+    }
+    function genOptions(correct){
+      const set = new Set([correct]);
+      while(set.size < 4){
+        const delta = randInt(-3,3);
+        set.add(Math.max(0, correct + delta));
+      }
+      return shuffle([...set]).slice(0,4);
+    }
+
+    /* ===== الدروس ===== */
+    const LESSONS = [
+      { id:"prep", title:"التهيئة", desc:"تهيئة لفكرة القسمة كتوزيع/تجميع.", tag:"تهيئة",
+        perGroupChoices:[2,3,4,5], show:{dist:true,facts:false,skill:true,mc:true} },
+      { id:"meaning", title:"مفهوم القسمة", desc:"القسمة: مجموعات متساوية أو توزيع بالتساوي.", tag:"مفهوم",
+        perGroupChoices:[2,3,5], show:{dist:true,facts:false,skill:true,mc:true} },
+      { id:"subRel", title:"علاقة القسمة بالطرح (الطرح المتكرر)", desc:"تمثيل القسمة بالطرح المتكرر.", tag:"طرح متكرر",
+        perGroupChoices:[2,3,4,5,6], show:{dist:true,facts:false,skill:true,mc:true} },
+      { id:"mulRel", title:"علاقة القسمة بالضرب (التحقق السريع)", desc:"التحقق بالضرب + عائلة الحقائق.", tag:"تحقق بالضرب",
+        perGroupChoices:[2,3,4,5,6,10], show:{dist:true,facts:true,skill:true,mc:true} },
+      { id:"div2", title:"القسمة على ٢", desc:"حقائق القسمة على ٢.", tag:"÷٢",
+        perGroupChoices:[2], show:{dist:true,facts:false,skill:true,mc:true} },
+      { id:"div5", title:"القسمة على ٥", desc:"حقائق القسمة على ٥.", tag:"÷٥",
+        perGroupChoices:[5], show:{dist:true,facts:false,skill:true,mc:true} },
+      { id:"div10", title:"القسمة على ١٠", desc:"حقائق القسمة على ١٠.", tag:"÷١٠",
+        perGroupChoices:[10], show:{dist:true,facts:false,skill:true,mc:true} },
+      { id:"zeroOne", title:"القسمة مع الصفر وعلى الواحد", desc:"قواعد: ÷١، ٠÷عدد، العدد÷نفسه. لا نقسم على صفر.", tag:"قواعد",
+        perGroupChoices:[2,5,10], show:{dist:false,facts:false,skill:true,mc:true} }
+    ];
+
+    const $ = (id)=>document.getElementById(id);
+
+    const lessonSelect = $("lessonSelect");
+    const startBtn = $("startBtn");
+    const resetBtn = $("resetBtn");
+
+    const headerCard = $("lessonHeaderCard");
+    const lessonTitle = $("lessonTitle");
+    const lessonDesc = $("lessonDesc");
+    const lessonTag  = $("lessonTag");
+
+    const stepbar = $("stepbar");
+    const panels = [ $("panel0"), $("panel1"), $("panel2"), $("panel3"), $("panel4") ];
+
+    let currentLesson = null;
+
+    function pickDivisor(ls){
+      const arr = ls.perGroupChoices || [2,3,4,5];
+      return arr[randInt(0, arr.length-1)];
+    }
+
+    function showStep(idx){
+      stepbar.querySelectorAll(".stepbtn").forEach(b=>{
+        b.classList.toggle("active", Number(b.dataset.step)===idx);
+      });
+      panels.forEach((p,i)=>p.classList.toggle("hidden", i!==idx));
+      window.scrollTo({top: headerCard.offsetTop - 10, behavior:"smooth"});
+    }
+
+    stepbar.addEventListener("click",(e)=>{
+      const btn = e.target.closest(".stepbtn");
+      if(!btn || !currentLesson) return;
+      showStep(Number(btn.dataset.step));
+    });
+
+    document.querySelectorAll("[data-goto]").forEach(btn=>{
+      btn.addEventListener("click",()=>{
+        if(!currentLesson) return;
+        showStep(Number(btn.dataset.goto));
+      });
+    });
+
+    /* شعارات */
+    (function(){
+      const main = $("logoMain");
+      const wrap = $("logoWrap");
+      main.addEventListener("error", ()=>{
+        main.style.display="none";
+        const ph = document.createElement("div");
+        ph.className="logoPh";
+        ph.textContent="شعار";
+        wrap.appendChild(ph);
+      });
+      const alt = $("logoAlt");
+      alt.addEventListener("error", ()=> alt.style.display="none");
+      alt.style.display="block";
+    })();
+
+    /* تعبئة الدروس */
+    LESSONS.forEach(ls=>{
+      const opt = document.createElement("option");
+      opt.value = ls.id;
+      opt.textContent = ls.title;
+      lessonSelect.appendChild(opt);
+    });
+
+    resetBtn.addEventListener("click", ()=>{
+      currentLesson = null;
+      headerCard.classList.add("hidden");
+      panels.forEach(p=>p.classList.add("hidden"));
+      lessonSelect.value = "";
+      $("evalBox").innerHTML = "";
+      $("evalBadge").textContent = "جاهز";
+      window.scrollTo({top:0,behavior:"smooth"});
+    });
+
+    /* ===== 1) المفاهيم ===== */
+    function makeMeaningQuestions(){
+      const q1 = { text:`وزّع ${toAr(30)} قطعة بالتساوي على ${toAr(5)} أطفال. ( ${toAr(30)} ÷ ${toAr(5)} ).`, correct:"A" };
+      const q2 = { text:`معك ${toAr(24)} قلمًا، تريد وضع ${toAr(6)} أقلام في كل علبة. ( ${toAr(24)} ÷ ${toAr(6)} ).`, correct:"B" };
+      const q3 = { text:`معك ${toAr(24)} قلمًا، تريد توزيعها بالتساوي على ${toAr(6)} طلاب. ( ${toAr(24)} ÷ ${toAr(6)} ).`, correct:"A" };
+      const q4 = { text:`كوّن مجموعات؛ كل مجموعة فيها ${toAr(5)} قطع من ${toAr(30)} قطعة. ( ${toAr(30)} ÷ ${toAr(5)} ).`, correct:"B" };
+      return shuffle([q1,q2,q3,q4]).slice(0,3);
+    }
+
+    function renderConcept(ls){
+      const terms = [
+        {t:"القسمة", d:"عملية تعني تكوين مجموعات متساوية أو توزيع بالتساوي."},
+        {t:"المقسوم", d:"العدد الكلي الذي نقسمه (عدد الأشياء كلها)."},
+        {t:"المقسوم عليه", d:"العدد الذي نقسم به: قد يعني عدد المجموعات/الأشخاص أو عدد العناصر في كل مجموعة."},
+        {t:"ناتج القسمة", d:"العدد الناتج بعد القسمة."},
+        {t:"التحقق", d:"للتحقق سريعًا: (المقسوم عليه × ناتج القسمة = المقسوم) إذا لا يوجد باقٍ."},
+      ];
+      if(ls.id==="zeroOne"){
+        terms.push({t:"قواعد مهمة", d:"العدد ÷ ١ = العدد، ٠ ÷ عدد = ٠ (إذا العدد ≠ ٠)، العدد ÷ نفسه = ١ (إذا العدد ≠ ٠). لا نقسم على صفر."});
+      }
+
+      $("conceptTerms").innerHTML = terms.map(x=>`
+        <div class="termCard">
+          <b>${x.t}</b>
+          <div class="termDef">${x.d}</div>
+        </div>
+      `).join("");
+
+      const items = makeMeaningQuestions();
+      const wrap = $("conceptMiniQuiz");
+      wrap.innerHTML = "";
+
+      items.forEach((q,idx)=>{
+        const container = document.createElement("div");
+        container.innerHTML = `
+          <div class="qrow">
+            <div>
+              <div class="qtext">سؤال ${toAr(idx+1)}: ${q.text}</div>
+              <div class="hint">ما معنى “المقسوم عليه”؟</div>
+            </div>
+            <div class="row">
+              <button class="btn secondary" data-a="A">عدد الأشخاص/المجموعات</button>
+              <button class="btn secondary" data-a="B">عدد العناصر في كل مجموعة</button>
+              <span class="feedback hidden"></span>
+            </div>
+          </div>
+          <div class="explainBox hidden"></div>
+        `;
+
+        const fb = container.querySelector(".feedback");
+        const exb = container.querySelector(".explainBox");
+
+        container.querySelectorAll("button").forEach(b=>{
+          b.addEventListener("click",()=>{
+            const a = b.dataset.a;
+            const ok = (a === q.correct);
+
+            fb.classList.remove("hidden");
+            fb.textContent = ok ? "✅ صحيح" : "❌ غير صحيح";
+            fb.className = ok ? "feedback ok" : "feedback bad";
+
+            exb.classList.remove("hidden");
+            exb.classList.toggle("bad", !ok);
+            exb.innerHTML = `
+              <div class="exTitle">${ok ? "تفسير:" : "التصحيح:"}</div>
+              <div>${q.correct==="A"
+                ? "في التوزيع: المقسوم عليه = عدد الأشخاص/المجموعات."
+                : "في تكوين المجموعات: المقسوم عليه = عدد العناصر في كل مجموعة."}</div>
+            `;
+          });
+        });
+
+        wrap.appendChild(container);
+      });
+    }
+
+    /* ===== 2) مثال ===== */
+    function buildExample(ls){
+      if(ls.id==="zeroOne"){
+        const n = randInt(12,48);
+        return {
+          qText:`ما ناتج ${toAr(n)} ÷ ${toAr(1)} ؟`,
+          answer:n,
+          steps:[
+            "القسمة على ١ لا تغيّر العدد.",
+            `${toAr(n)} ÷ ${toAr(1)} = ${toAr(n)}`
+          ],
+          viz: eqLine("القاعدة:", `${toAr(n)} ÷ ${toAr(1)} = ${toAr(n)}`),
+          check:{ total:n, d:1, q:n, ask:`${toAr(n)} × ${toAr(1)} = ؟`, ans:n }
+        };
+      }
+
+      const d = pickDivisor(ls);
+      const q = randInt(2,10);
+      const total = d*q;
+
+      if(ls.id==="subRel"){
+        return {
+          qText:`ما ناتج ${toAr(total)} ÷ ${toAr(d)} ؟`,
+          answer:q,
+          steps:[
+            `نطرح ${toAr(d)} من ${toAr(total)} كل مرة حتى نصل إلى ٠.`,
+            `عدد القفزات = ناتج القسمة.`,
+            `إذن: ${toAr(total)} ÷ ${toAr(d)} = ${toAr(q)}`
+          ],
+          viz: eqLine("الطرح المتكرر:", `${toAr(total)} ÷ ${toAr(d)} = ${toAr(q)}`) + renderNumberLine(total, d),
+          check:{ total, d, q, ask:`${toAr(q)} × ${toAr(d)} = ؟`, ans:total }
+        };
+      }
+
+      if(ls.id==="mulRel"){
+        return {
+          qText:`ما ناتج ${toAr(total)} ÷ ${toAr(d)} ؟`,
+          answer:q,
+          steps:[
+            `نستخدم حقيقة الضرب: ${toAr(q)} × ${toAr(d)} = ${toAr(total)}.`,
+            `ناتج القسمة هو العامل المفقود.`,
+            `إذن: ${toAr(total)} ÷ ${toAr(d)} = ${toAr(q)}`
+          ],
+          viz: eqLine("عائلة الحقائق:", `${toAr(q)} × ${toAr(d)} = ${toAr(total)}`) + renderFactTriangle(q,d),
+          check:{ total, d, q, ask:`${toAr(d)} × ${toAr(q)} = ؟`, ans:total }
+        };
+      }
+
+      return {
+        qText:`ما ناتج ${toAr(total)} ÷ ${toAr(d)} ؟`,
+        answer:q,
+        steps:[
+          `نكوّن مجموعات متساوية: كل مجموعة فيها ${toAr(d)}.`,
+          `عدد المجموعات = ناتج القسمة.`,
+          `إذن: ${toAr(total)} ÷ ${toAr(d)} = ${toAr(q)}`
+        ],
+        viz: eqLine("مجموعات متساوية:", `${toAr(total)} ÷ ${toAr(d)} = ${toAr(q)}`) + renderEqualGroups(total, d),
+        check:{ total, d, q, ask:`${toAr(q)} × ${toAr(d)} = ؟`, ans:total }
+      };
+    }
+
+    function renderExample(ls){
+      const ex = buildExample(ls);
+      const options = genOptions(ex.answer);
+
+      $("exampleBox").innerHTML = `
+        <div class="box">
+          <b>السؤال:</b>
+          <div class="qtext" style="margin-top:8px">${ex.qText}</div>
+          <div class="opts" id="exOpts"></div>
+          <div class="feedback hidden" id="exFb" style="margin-top:8px"></div>
+          <div class="explainBox hidden" id="exExplain"></div>
+        </div>
+
+        <div class="box hidden" id="checkBox">
+          <b>تحقق بالضرب:</b>
+          <div class="hint" style="margin-top:6px">أدخل/أدخلي ناتج الضرب ثم تحقق.</div>
+          <div class="qrow" style="margin-top:10px">
+            <div class="qtext" id="checkQ">${ex.check.ask}</div>
+            <div class="row">
+              <input id="checkInput" inputmode="numeric" placeholder="اكتب/اكتبي الناتج">
+              <button class="btn accent" id="checkBtn">تحقق</button>
+              <span class="feedback hidden" id="checkFb"></span>
+            </div>
+          </div>
+          <div class="explainBox hidden" id="checkExplain"></div>
+        </div>
+      `;
+
+      const optsWrap = $("exOpts");
+      const fb = $("exFb");
+      const explain = $("exExplain");
+      const checkBox = document.getElementById("checkBox");
+
+      options.forEach(v=>{
+        const b = document.createElement("button");
+        b.className="optBtn";
+        b.textContent = toAr(v);
+        b.addEventListener("click", ()=>{
+          optsWrap.querySelectorAll("button").forEach(x=>x.disabled=true);
+
+          const ok = (v === ex.answer);
+          if(ok) b.classList.add("correct");
+          else{
+            b.classList.add("wrong");
+            optsWrap.querySelectorAll("button").forEach(x=>{
+              if(parseNum(x.textContent)===ex.answer) x.classList.add("correct");
+            });
+          }
+
+          fb.classList.remove("hidden");
+          fb.textContent = ok ? "✅ صحيح" : `❌ غير صحيح — الصحيح: ${toAr(ex.answer)}`;
+          fb.className = ok ? "feedback ok" : "feedback bad";
+
+          explain.classList.remove("hidden");
+          explain.classList.toggle("bad", !ok);
+          explain.innerHTML = `
+            <div class="exTitle">الشرح:</div>
+            <ol style="margin:8px 0 0;line-height:1.9">
+              ${ex.steps.map(s=>`<li>${s}</li>`).join("")}
+            </ol>
+            <div style="margin-top:10px">
+              <div class="exTitle">رسم توضيحي:</div>
+              ${ex.viz}
+            </div>
+          `;
+
+          checkBox.classList.remove("hidden");
+
+          const inp = document.getElementById("checkInput");
+          const btn = document.getElementById("checkBtn");
+          const cfb = document.getElementById("checkFb");
+          const cex = document.getElementById("checkExplain");
+          forceArabicDigits(inp);
+
+          btn.onclick = ()=>{
+            const val = parseNum(inp.value);
+            if(!Number.isFinite(val)) return;
+
+            const ok2 = (val === ex.check.ans);
+            cfb.classList.remove("hidden");
+            cfb.textContent = ok2 ? "✅ صحيح" : "❌ غير صحيح";
+            cfb.className = ok2 ? "feedback ok" : "feedback bad";
+
+            cex.classList.remove("hidden");
+            cex.classList.toggle("bad", !ok2);
+            cex.innerHTML = `
+              <div class="exTitle">${ok2 ? "تأكيد:" : "تصحيح:"}</div>
+              ${eqLine("التحقق:", `${toAr(ex.check.d)} × ${toAr(ex.check.q)} = ${toAr(ex.check.total)}`)}
+              <div style="margin-top:10px">
+                <div class="exTitle">رسم:</div>
+                ${renderEqualGroups(ex.check.total, ex.check.d)}
+              </div>
+            `;
+          };
+        });
+        optsWrap.appendChild(b);
+      });
+    }
+
+    /* ===== 3) تدريب ===== */
+    $("practiceNewBtn").addEventListener("click", ()=>{ if(currentLesson) buildPractice(currentLesson); });
+
+    function buildPractice(ls){
+      const wrap = $("practiceList");
+      wrap.innerHTML = "";
+
+      const items = [];
+      if(ls.id==="zeroOne"){
+        const n = randInt(6,60);
+        const m = randInt(2,12);
+        items.push({kind:"rule", q:`${toAr(n)} ÷ ${toAr(1)} = ؟`, ans:n, exp:()=> eqLine("القاعدة:", `${toAr(n)} ÷ ${toAr(1)} = ${toAr(n)}`)});
+        items.push({kind:"rule", q:`${toAr(0)} ÷ ${toAr(m)} = ؟`, ans:0, exp:()=> eqLine("القاعدة:", `${toAr(0)} ÷ ${toAr(m)} = ${toAr(0)}`)});
+        items.push({kind:"rule", q:`${toAr(m)} ÷ ${toAr(m)} = ؟`, ans:1, exp:()=> eqLine("القاعدة:", `${toAr(m)} ÷ ${toAr(m)} = ${toAr(1)}`)});
+        items.push({kind:"text", q:`هل يجوز القسمة على صفر؟ (اكتب/اكتبي: لا)`, ansText:"لا", exp:()=> "لا نقسم على صفر ❗"});
+      }else{
+        for(let i=0;i<4;i++){
+          const d = pickDivisor(ls);
+          const q = randInt(2,10);
+          const total = d*q;
+          items.push({kind:"div", total, d, q, qText:`${toAr(total)} ÷ ${toAr(d)} = ؟`});
+        }
+      }
+
+      items.forEach((it,idx)=>{
+        const container = document.createElement("div");
+        container.innerHTML = `
+          <div class="qrow">
+            <div>
+              <div class="qtext">تمرين ${toAr(idx+1)}: ${it.qText || it.q}</div>
+              <div class="hint">اكتب/اكتبي ثم تحقق.</div>
+            </div>
+            <div class="row">
+              <input ${it.kind==="text" ? "" : 'inputmode="numeric"'} placeholder="الإجابة">
+              <button class="btn accent">تحقق</button>
+              <span class="feedback hidden"></span>
+            </div>
+          </div>
+          <div class="explainBox hidden"></div>
+        `;
+
+        const inp = container.querySelector("input");
+        const btn = container.querySelector("button");
+        const fb = container.querySelector(".feedback");
+        const exb = container.querySelector(".explainBox");
+        forceArabicDigits(inp);
+
+        btn.addEventListener("click", ()=>{
+          let ok=false;
+          if(it.kind==="div") ok = (parseNum(inp.value)===it.q);
+          else if(it.kind==="text") ok = (String(inp.value||"").trim()===it.ansText);
+          else ok = (parseNum(inp.value)===it.ans);
+
+          fb.classList.remove("hidden");
+          fb.textContent = ok ? "✅ صحيح" : "❌ غير صحيح";
+          fb.className = ok ? "feedback ok" : "feedback bad";
+
+          exb.classList.remove("hidden");
+          exb.classList.toggle("bad", !ok);
+
+          if(it.kind==="div"){
+            exb.innerHTML = `
+              <div class="exTitle">${ok ? "تغذية راجعة:" : "التصحيح:"}</div>
+              ${!ok ? `<div>الإجابة الصحيحة: <b>${toAr(it.q)}</b></div>` : `<div>تحقق بالضرب للتأكد.</div>`}
+              ${eqLine("التحقق:", `${toAr(it.d)} × ${toAr(it.q)} = ${toAr(it.total)}`)}
+              <div style="margin-top:10px">
+                <div class="exTitle">رسم:</div>
+                ${renderEqualGroups(it.total, it.d)}
+              </div>
+            `;
+          }else{
+            exb.innerHTML = `
+              <div class="exTitle">${ok ? "تأكيد:" : "تلميح:"}</div>
+              ${it.exp ? it.exp() : ""}
+            `;
+          }
+        });
+
+        wrap.appendChild(container);
+      });
+    }
+
+    /* ===== 4.1 التوزيع ===== */
+    const dist = { total:0, perGroup:0, distributed:0, groups:[] };
+    const distEl = {
+      prompt: $("distPrompt"),
+      remaining: $("distRemaining"),
+      groupsWrap: $("distGroups"),
+      btnNew: $("distNewBtn"),
+      btnOne: $("distOneBtn"),
+      btnAuto: $("distAutoBtn"),
+      btnReset: $("distResetBtn"),
+      answer: $("distAnswer"),
+      btnCheck: $("distCheckBtn"),
+      feedback: $("distFeedback"),
+      explain: $("distExplain")
+    };
+    forceArabicDigits(distEl.answer);
+
+    distEl.btnNew.addEventListener("click", ()=>{ if(currentLesson) buildDistribution(currentLesson); });
+    distEl.btnOne.addEventListener("click", ()=> addPiece());
+    distEl.btnAuto.addEventListener("click", ()=> { while(dist.distributed < dist.total) addPiece(); });
+    distEl.btnReset.addEventListener("click", ()=> resetDistribution());
+    distEl.btnCheck.addEventListener("click", ()=> checkDistribution());
+
+    function buildDistribution(ls){
+      if(!ls.show.dist) return;
+
+      dist.perGroup = pickDivisor(ls);
+      const q = randInt(2,10);
+      dist.total = dist.perGroup*q;
+      dist.distributed = 0;
+      dist.groups = [];
+
+      distEl.groupsWrap.innerHTML = "";
+      distEl.answer.value = "";
+
+      distEl.feedback.classList.add("hidden");
+      distEl.explain.classList.add("hidden");
+      distEl.explain.classList.remove("bad");
+
+      distEl.btnOne.disabled = false;
+      distEl.answer.disabled = true;
+      distEl.btnCheck.disabled = true;
+
+      distEl.prompt.textContent = `كوّن مجموعات؛ كل مجموعة فيها ${toAr(dist.perGroup)} عناصر. لديك ${toAr(dist.total)} عنصرًا.`;
+      updateRemaining();
+    }
+
+    function updateRemaining(){
+      const left = dist.total - dist.distributed;
+      distEl.remaining.textContent = `المتبقي: ${toAr(left)}`;
+    }
+
+    function createGroup(){
+      const idx = dist.groups.length + 1;
+      const g = document.createElement("div");
+      g.className = "groupBox";
+      g.dataset.count = "0";
+      g.innerHTML = `<div class="groupTitle">مجموعة ${toAr(idx)}</div><div class="pieces"></div>`;
+      distEl.groupsWrap.appendChild(g);
+      dist.groups.push(g);
+      return g;
+    }
+
+    function ensureGroup(){
+      let last = dist.groups[dist.groups.length - 1];
+      if(!last) return createGroup();
+      const count = Number(last.dataset.count || "0");
+      if(count >= dist.perGroup) return createGroup();
+      return last;
+    }
+
+    function addPiece(){
+      if(dist.distributed >= dist.total) return;
+
+      const g = ensureGroup();
+      const pieces = g.querySelector(".pieces");
+
+      const p = document.createElement("span");
+      p.className = "piece";
+      pieces.appendChild(p);
+
+      g.dataset.count = String(Number(g.dataset.count) + 1);
+      dist.distributed += 1;
+      updateRemaining();
+
+      if(dist.distributed >= dist.total){
+        distEl.btnOne.disabled = true;
+        distEl.answer.disabled = false;
+        distEl.btnCheck.disabled = false;
+      }
+    }
+
+    function resetDistribution(){
+      dist.distributed = 0;
+      dist.groups = [];
+      distEl.groupsWrap.innerHTML = "";
+      distEl.answer.value = "";
+
+      distEl.feedback.classList.add("hidden");
+      distEl.explain.classList.add("hidden");
+      distEl.explain.classList.remove("bad");
+
+      distEl.btnOne.disabled = false;
+      distEl.answer.disabled = true;
+      distEl.btnCheck.disabled = true;
+
+      updateRemaining();
+    }
+
+    function expectedGroups(){
+      return dist.total / dist.perGroup;
+    }
+
+    function checkDistribution(){
+      const user = parseNum(distEl.answer.value);
+      const exp = expectedGroups();
+      if(!Number.isFinite(user)) return;
+
+      const ok = (user === exp);
+
+      distEl.feedback.classList.remove("hidden");
+      distEl.feedback.textContent = ok ? "✅ صحيح" : "❌ غير صحيح";
+      distEl.feedback.className = ok ? "feedback ok" : "feedback bad";
+
+      distEl.explain.classList.remove("hidden");
+      distEl.explain.classList.toggle("bad", !ok);
+      distEl.explain.innerHTML = `
+        <div class="exTitle">${ok ? "تأكيد:" : "التصحيح:"}</div>
+        ${!ok ? `<div>الإجابة الصحيحة: <b>${toAr(exp)}</b></div>` : `<div>تحقق بالضرب للتأكد.</div>`}
+        ${eqLine("التحقق:", `${toAr(user)} × ${toAr(dist.perGroup)} = ${toAr(user*dist.perGroup)} (المفروض = ${toAr(dist.total)})`)}
+        <div style="margin-top:10px">
+          <div class="exTitle">رسم:</div>
+          ${renderEqualGroups(dist.total, dist.perGroup)}
+        </div>
+      `;
+    }
+
+    /* ===== 4.2 عائلة الحقائق ===== */
+    $("factsNewBtn").addEventListener("click", ()=>{ if(currentLesson) buildFacts(currentLesson); });
+
+    function buildFacts(ls){
+      if(!ls.show.facts) return;
+
+      const b = pickDivisor(ls);
+      const a = randInt(2,10);
+      const total = a*b;
+
+      $("factsPrompt").textContent = `إذا كان ${toAr(a)} × ${toAr(b)} = ${toAr(total)}، فما ناتج ${toAr(total)} ÷ ${toAr(b)} ؟`;
+
+      const correct = a;
+      const opts = shuffle([correct, correct+1, Math.max(1, correct-1), correct+2]).slice(0,4);
+
+      renderOneMCQ($("factsMCQ"), {
+        prompt:`اختر/اختاري الناتج:`,
+        opts,
+        answer:correct,
+        explainHTML: `
+          <div class="exTitle">عائلة الحقائق:</div>
+          ${renderFactTriangle(a,b)}
+          ${eqLine("حقائق:", `${toAr(a)}×${toAr(b)}=${toAr(total)} ، ${toAr(total)}÷${toAr(b)}=${toAr(a)} ، ${toAr(total)}÷${toAr(a)}=${toAr(b)}`)}
+        `
+      });
+    }
+
+    function renderOneMCQ(container, data){
+      container.innerHTML = `
+        <div class="qtext">${data.prompt}</div>
+        <div class="opts"></div>
+        <div class="feedback hidden"></div>
+        <div class="explainBox hidden"></div>
+      `;
+      const optsWrap = container.querySelector(".opts");
+      const fb = container.querySelector(".feedback");
+      const exb = container.querySelector(".explainBox");
+
+      data.opts.forEach(v=>{
+        const b = document.createElement("button");
+        b.className = "optBtn";
+        b.textContent = toAr(v);
+        b.addEventListener("click", ()=>{
+          optsWrap.querySelectorAll("button").forEach(x=>x.disabled=true);
+
+          const ok = (v === data.answer);
+          if(ok) b.classList.add("correct");
+          else{
+            b.classList.add("wrong");
+            optsWrap.querySelectorAll("button").forEach(x=>{
+              if(parseNum(x.textContent)===data.answer) x.classList.add("correct");
+            });
+          }
+
+          fb.classList.remove("hidden");
+          fb.textContent = ok ? "✅ صحيح" : `❌ غير صحيح — الصحيح: ${toAr(data.answer)}`;
+          fb.className = ok ? "feedback ok" : "feedback bad";
+
+          exb.classList.remove("hidden");
+          exb.classList.toggle("bad", !ok);
+          exb.innerHTML = data.explainHTML || "";
+        });
+        optsWrap.appendChild(b);
+      });
+    }
+
+    /* ===== 4.3 مهارة المقسوم عليه ===== */
+    $("skillNewBtn").addEventListener("click", ()=>{ if(currentLesson) buildSkill(currentLesson); });
+    $("skillA").addEventListener("click", ()=> answerSkill("A"));
+    $("skillB").addEventListener("click", ()=> answerSkill("B"));
+
+    let skillState = null;
+
+    function buildSkill(ls){
+      const total = randInt(12,60);
+      const d = pickDivisor(ls);
+
+      const share = {
+        correct:"A",
+        text:`معك ${toAr(total)} قلمًا، تريد توزيعها بالتساوي على ${toAr(d)} طلاب. ماذا يمثّل ${toAr(d)}؟`
+      };
+      const group = {
+        correct:"B",
+        text:`معك ${toAr(total)} قلمًا، تريد وضع ${toAr(d)} أقلام في كل علبة. ماذا يمثّل ${toAr(d)}؟`
+      };
+
+      skillState = (Math.random() < 0.5) ? share : group;
+
+      $("skillPrompt").textContent = skillState.text;
+      $("skillFeedback").classList.add("hidden");
+      $("skillExplain").classList.add("hidden");
+      $("skillExplain").classList.remove("bad");
+    }
+
+    function answerSkill(ans){
+      if(!skillState) return;
+
+      const ok = (ans === skillState.correct);
+      const fb = $("skillFeedback");
+      const exb = $("skillExplain");
+
+      fb.classList.remove("hidden");
+      fb.textContent = ok ? "✅ صحيح" : "❌ غير صحيح";
+      fb.className = ok ? "feedback ok" : "feedback bad";
+
+      exb.classList.remove("hidden");
+      exb.classList.toggle("bad", !ok);
+      exb.innerHTML = `
+        <div class="exTitle">${ok ? "تفسير:" : "التصحيح:"}</div>
+        <div>${skillState.correct==="A"
+          ? "في التوزيع: المقسوم عليه = عدد الأشخاص/المجموعات."
+          : "في تكوين المجموعات: المقسوم عليه = عدد العناصر في كل مجموعة."}</div>
+      `;
+    }
+
+    /* ===== 4.4 اختيار من متعدد عام ===== */
+    $("mcNewBtn").addEventListener("click", ()=>{ if(currentLesson) buildMC(currentLesson); });
+
+    function buildMC(ls){
+      const wrap = $("mcList");
+      const scoreLine = $("mcScoreLine");
+      wrap.innerHTML = "";
+      scoreLine.textContent = "";
+
+      let questions = [];
+      if(ls.id === "zeroOne"){
+        const n = randInt(6,60);
+        const m = randInt(2,12);
+        questions = [
+          {kind:"rule", prompt:`${toAr(n)} ÷ ${toAr(1)} = ؟`, answer:n, opts:shuffle([n, n+1, Math.max(0,n-1), n+2]),
+            explain:()=> eqLine("القاعدة:", `${toAr(n)} ÷ ${toAr(1)} = ${toAr(n)}`) },
+          {kind:"rule", prompt:`${toAr(0)} ÷ ${toAr(m)} = ؟`, answer:0, opts:shuffle([0,1,2,m]),
+            explain:()=> eqLine("القاعدة:", `${toAr(0)} ÷ ${toAr(m)} = ${toAr(0)}`) },
+          {kind:"rule", prompt:`${toAr(m)} ÷ ${toAr(m)} = ؟`, answer:1, opts:shuffle([1,0,2,m]),
+            explain:()=> eqLine("القاعدة:", `${toAr(m)} ÷ ${toAr(m)} = ${toAr(1)}`) },
+        ];
+      }else{
+        for(let i=0;i<6;i++){
+          const d = pickDivisor(ls);
+          const q = randInt(2,10);
+          const total = d*q;
+          questions.push({kind:"div", prompt:`${toAr(total)} ÷ ${toAr(d)} = ؟`, answer:q, opts:genOptions(q), total, d, q});
+        }
+      }
+
+      let score = 0;
+
+      questions.forEach((q,idx)=>{
+        const box = document.createElement("div");
+        box.className = "mcq";
+        box.innerHTML = `
+          <div class="qtext">س${toAr(idx+1)}: ${q.prompt}</div>
+          <div class="opts"></div>
+          <div class="feedback hidden"></div>
+          <div class="explainBox hidden"></div>
+        `;
+        const optsWrap = box.querySelector(".opts");
+        const fb = box.querySelector(".feedback");
+        const exb = box.querySelector(".explainBox");
+
+        q.opts.forEach(v=>{
+          const b = document.createElement("button");
+          b.className="optBtn";
+          b.textContent = toAr(v);
+          b.addEventListener("click", ()=>{
+            optsWrap.querySelectorAll("button").forEach(x=>x.disabled=true);
+
+            const ok = (v === q.answer);
+            if(ok){ b.classList.add("correct"); score++; }
+            else{
+              b.classList.add("wrong");
+              optsWrap.querySelectorAll("button").forEach(x=>{
+                if(parseNum(x.textContent)===q.answer) x.classList.add("correct");
+              });
+            }
+
+            fb.classList.remove("hidden");
+            fb.textContent = ok ? "✅ صحيح" : `❌ غير صحيح — الصحيح: ${toAr(q.answer)}`;
+            fb.className = ok ? "feedback ok" : "feedback bad";
+
+            exb.classList.remove("hidden");
+            exb.classList.toggle("bad", !ok);
+
+            if(q.kind==="div"){
+              exb.innerHTML = `
+                <div class="exTitle">شرح:</div>
+                ${eqLine("التحقق:", `${toAr(q.d)} × ${toAr(q.answer)} = ${toAr(q.total)}`)}
+                <div style="margin-top:10px">
+                  <div class="exTitle">رسم:</div>
+                  ${renderEqualGroups(q.total, q.d)}
+                </div>
+              `;
+            }else{
+              exb.innerHTML = `<div class="exTitle">شرح:</div>${q.explain ? q.explain() : ""}`;
+            }
+
+            scoreLine.textContent = `درجتك: ${toAr(score)} / ${toAr(questions.length)}`;
+          });
+          optsWrap.appendChild(b);
+        });
+
+        wrap.appendChild(box);
+      });
+
+      scoreLine.textContent = `درجتك: ${toAr(0)} / ${toAr(questions.length)}`;
+    }
+
+    /* ===== 5) التقويم ===== */
+    $("evalStartBtn").addEventListener("click", ()=>{ if(currentLesson) startEval(currentLesson); });
+
+    function resetEvalUI(){
+      $("evalBox").innerHTML = "";
+      $("evalBadge").textContent = "جاهز";
+    }
+
+    function startEval(ls){
+      const box = $("evalBox");
+      box.innerHTML = "";
+
+      let qs = [];
+      if(ls.id==="zeroOne"){
+        const n = randInt(8,60);
+        const m = randInt(2,12);
+        qs = [
+          {kind:"rule", prompt:`${toAr(n)} ÷ ${toAr(1)} = ؟`, answer:n, explain:()=> eqLine("القاعدة:", `${toAr(n)} ÷ ${toAr(1)} = ${toAr(n)}`)},
+          {kind:"rule", prompt:`${toAr(0)} ÷ ${toAr(m)} = ؟`, answer:0, explain:()=> eqLine("القاعدة:", `${toAr(0)} ÷ ${toAr(m)} = ${toAr(0)}`)},
+          {kind:"rule", prompt:`${toAr(m)} ÷ ${toAr(m)} = ؟`, answer:1, explain:()=> eqLine("القاعدة:", `${toAr(m)} ÷ ${toAr(m)} = ${toAr(1)}`)},
+          {kind:"text", prompt:`هل يجوز القسمة على صفر؟ (اكتب/اكتبي: لا)`, answerText:"لا", explain:()=> "لا نقسم على صفر ❗"},
+        ];
+      }else{
+        for(let i=0;i<8;i++){
+          const d = pickDivisor(ls);
+          const q = randInt(2,10);
+          const total = d*q;
+          qs.push({kind:"div", prompt:`${toAr(total)} ÷ ${toAr(d)} = ؟`, answer:q, d, total});
+        }
+      }
+
+      let score=0;
+
+      qs.forEach((q,idx)=>{
+        const container = document.createElement("div");
+        container.innerHTML = `
+          <div class="qrow">
+            <div>
+              <div class="qtext">س${toAr(idx+1)}: ${q.prompt}</div>
+              <div class="hint">اكتب/اكتبي ثم تحقق.</div>
+            </div>
+            <div class="row">
+              <input ${q.kind==="text" ? "" : 'inputmode="numeric"'} placeholder="الإجابة">
+              <button class="btn accent">تحقق</button>
+              <span class="feedback hidden"></span>
+            </div>
+          </div>
+          <div class="explainBox hidden"></div>
+        `;
+
+        const inp = container.querySelector("input");
+        const btn = container.querySelector("button");
+        const fb = container.querySelector(".feedback");
+        const exb = container.querySelector(".explainBox");
+        forceArabicDigits(inp);
+
+        btn.addEventListener("click", ()=>{
+          if(btn.disabled) return;
+          btn.disabled = true;
+
+          let ok=false;
+          if(q.kind==="text") ok = (String(inp.value||"").trim()===q.answerText);
+          else ok = (parseNum(inp.value)===q.answer);
+
+          fb.classList.remove("hidden");
+          if(ok){ score++; fb.textContent="✅ صحيح"; fb.className="feedback ok"; }
+          else{ fb.textContent="❌ غير صحيح"; fb.className="feedback bad"; }
+
+          $("evalBadge").textContent = `النتيجة: ${toAr(score)} / ${toAr(qs.length)}`;
+
+          exb.classList.remove("hidden");
+          exb.classList.toggle("bad", !ok);
+
+          if(q.kind==="div"){
+            exb.innerHTML = `
+              <div class="exTitle">${ok ? "تأكيد:" : "التصحيح:"}</div>
+              ${!ok ? `<div>الإجابة الصحيحة: <b>${toAr(q.answer)}</b></div>` : `<div>تحقق بالضرب للتأكد.</div>`}
+              ${eqLine("التحقق:", `${toAr(q.d)} × ${toAr(q.answer)} = ${toAr(q.total)}`)}
+              <div style="margin-top:10px">
+                <div class="exTitle">رسم:</div>
+                ${renderEqualGroups(q.total, q.d)}
+              </div>
+            `;
+          }else{
+            exb.innerHTML = `<div class="exTitle">${ok ? "تأكيد:" : "تلميح:"}</div>${q.explain ? q.explain() : ""}`;
+          }
+        });
+
+        box.appendChild(container);
+      });
+
+      $("evalBadge").textContent = `النتيجة: ${toAr(0)} / ${toAr(qs.length)}`;
+    }
+
+    /* ===== تشغيل الدرس ===== */
+    startBtn.addEventListener("click", ()=>{
+      const id = lessonSelect.value;
+      const ls = LESSONS.find(x=>x.id===id);
+      if(!ls) return;
+
+      currentLesson = ls;
+
+      headerCard.classList.remove("hidden");
+      lessonTitle.textContent = ls.title;
+      lessonDesc.textContent  = ls.desc;
+      lessonTag.textContent   = ls.tag;
+
+      $("actDist").classList.toggle("hidden", !ls.show.dist);
+      $("actFacts").classList.toggle("hidden", !ls.show.facts);
+      $("actSkill").classList.toggle("hidden", !ls.show.skill);
+      $("actMC").classList.toggle("hidden", !ls.show.mc);
+
+      renderConcept(ls);
+      renderExample(ls);
+      buildPractice(ls);
+      if(ls.show.dist) buildDistribution(ls);
+      if(ls.show.facts) buildFacts(ls);
+      if(ls.show.skill) buildSkill(ls);
+      if(ls.show.mc) buildMC(ls);
+      resetEvalUI();
+
+      showStep(0);
+    });
+  </script>
+</body>
+</html>
